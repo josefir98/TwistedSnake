@@ -1,0 +1,22 @@
+//checks for collision with walls
+        if (snake.y[0] < 0) {
+            running = false;
+        }
+        if (snake.y[0] > SCREEN_HEIGHT) {
+            running = false;
+        }
+        if (snake.x[0] < 0) {
+            running = false;
+        }
+        if (snake.x[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+
+
+//checks for collision with walls
+        if (snake.y[0] < 0 || snake.y[0] > SCREEN_HEIGHT || snake.x[0] < 0 || snake.x[0] > SCREEN_WIDTH) {
+            running = false;
+        }
+
+TODO:
+    make snake and food inside GamePanel
