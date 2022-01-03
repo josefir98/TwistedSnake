@@ -27,10 +27,10 @@ private static void wait(int ms) {
             {
                 Thread.currentThread().interrupt();
             }
-        }
+}
 
 TODO:
-    make snake and food inside GamePanel
+
 
     ideas:
         wiggling tail

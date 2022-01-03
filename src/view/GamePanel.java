@@ -24,13 +24,13 @@ public class GamePanel extends JPanel implements ActionListener {
 
     boolean canTurn = true;
 
-    public GamePanel(GameLogic gameLogic) {
-        this.gameLogic = gameLogic;
+    public GamePanel() { //mb add params for snake and food in future?
+        this.snake = new Snake();
+        this.food = new MainFood();
+        this.gameLogic = new GameLogic(this.snake, this.food);
         this.screenWidth = gameLogic.screenWidth;
         this.screenHeight = gameLogic.screenHeight;
         this.unitSize = gameLogic.unitSize;
-        this.snake = gameLogic.snake;
-        this.food = gameLogic.food;
 
         this.setPreferredSize(new Dimension(600, 600));
         this.setBackground(Color.BLACK);

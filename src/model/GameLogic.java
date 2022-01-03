@@ -12,12 +12,21 @@ public class GameLogic {
 
     Random random = new Random();
 
-    public Snake snake = new Snake(gameUnits,'R');
-    public MainFood food = new MainFood();
+    Snake snake;
+    MainFood food;
+
+    public GameLogic(Snake snake, MainFood food) {
+        this.snake = snake;
+        this.snake.x = new int[gameUnits];
+        this.snake.y = new int[gameUnits];
+        this.snake.bodyParts = 6;
+        this.snake.direction = 'R';
+        this.food = food;
+    }
 
     public void newFood() {
-        food.x = random.nextInt((int) screenWidth / unitSize) * unitSize;
-        food.y = random.nextInt((int) screenHeight / unitSize) * unitSize;
+        food.x = random.nextInt(screenWidth / unitSize) * unitSize;
+        food.y = random.nextInt(screenHeight / unitSize) * unitSize;
     }
 
     public void move() {
@@ -27,18 +36,10 @@ public class GameLogic {
         }
 
         switch (snake.direction) {
-            case 'U':
-                snake.y[0] -= unitSize;
-                break;
-            case 'D':
-                snake.y[0] += unitSize;
-                break;
-            case 'L':
-                snake.x[0] -= unitSize;
-                break;
-            case 'R':
-                snake.x[0] += unitSize;
-                break;
+            case 'U' -> snake.y[0] -= unitSize;
+            case 'D' -> snake.y[0] += unitSize;
+            case 'L' -> snake.x[0] -= unitSize;
+            case 'R' -> snake.x[0] += unitSize;
         }
     }
 
@@ -52,14 +53,11 @@ public class GameLogic {
         //checks for collision with walls
         if (snake.y[0] < 0) {
             return true;
-        }
-        if (snake.y[0] >= screenHeight) {
+        } else if (snake.y[0] >= screenHeight) {
             return true;
-        }
-        if (snake.x[0] < 0) {
+        } else if (snake.x[0] < 0) {
             return true;
-        }
-        if (snake.x[0] >= screenWidth) {
+        } else if (snake.x[0] >= screenWidth) {
             return true;
         }
         return false;
