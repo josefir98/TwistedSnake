@@ -30,6 +30,18 @@ private static void wait(int ms) {
 }
 
 TODO:
+    1. Make whole game seamlessly resizable
+    2. StartMenu
+        Play button
+        Options button
+            fullscreen
+        Sound effects and music volume slider
+            plus clicking icon mutes
+        Credits button
+    3.MenuBars
+        standard resolutions
+        fullscreen
+        mute
 
 
     ideas:
