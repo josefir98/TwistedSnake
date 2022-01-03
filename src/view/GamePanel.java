@@ -22,6 +22,8 @@ public class GamePanel extends JPanel implements ActionListener {
     Snake snake;
     MainFood food;
 
+    boolean canTurn = true;
+
     public GamePanel(GameLogic gameLogic) {
         this.gameLogic = gameLogic;
         this.screenWidth = gameLogic.screenWidth;
@@ -69,6 +71,7 @@ public class GamePanel extends JPanel implements ActionListener {
                     g.fillRect(snake.x[i], snake.y[i], unitSize, unitSize);
                 }
             }
+            canTurn = true;
         } else {
             gameOver(g);
         }
@@ -100,32 +103,34 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
     }
 
-    //fix too fast movement
     public class SnakeKeyAdapter extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            switch (e.getKeyCode()) {
-                case KeyEvent.VK_UP:
-                    if (snake.direction != 'D') {
-                        snake.direction = 'U';
-                    }
-                    break;
-                case KeyEvent.VK_DOWN:
-                    if (snake.direction != 'U') {
-                        snake.direction = 'D';
-                    }
-                    break;
-                case KeyEvent.VK_LEFT:
-                    if (snake.direction != 'R') {
-                        snake.direction = 'L';
-                    }
-                    break;
-                case KeyEvent.VK_RIGHT:
-                    if (snake.direction != 'L') {
-                        snake.direction = 'R';
-                    }
-                    break;
+            if (canTurn) {
+                switch (e.getKeyCode()) {
+                    case KeyEvent.VK_UP:
+                        if (snake.direction != 'D') {
+                            snake.direction = 'U';
+                        }
+                        break;
+                    case KeyEvent.VK_DOWN:
+                        if (snake.direction != 'U') {
+                            snake.direction = 'D';
+                        }
+                        break;
+                    case KeyEvent.VK_LEFT:
+                        if (snake.direction != 'R') {
+                            snake.direction = 'L';
+                        }
+                        break;
+                    case KeyEvent.VK_RIGHT:
+                        if (snake.direction != 'L') {
+                            snake.direction = 'R';
+                        }
+                        break;
+                }
             }
+            canTurn = false;
         }
     }
 }

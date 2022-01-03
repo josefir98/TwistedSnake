@@ -18,5 +18,30 @@
             running = false;
         }
 
+private static void wait(int ms) {
+            try
+            {
+                Thread.sleep(ms);
+            }
+            catch(InterruptedException ex)
+            {
+                Thread.currentThread().interrupt();
+            }
+        }
+
 TODO:
     make snake and food inside GamePanel
+
+    ideas:
+        wiggling tail
+
+        changing color mechanic
+
+        Save system for progression and settings
+
+        Survive timer / wave mode
+
+        make it beautyful elegant and quality of lify
+
+        add an action queue so the game registers all keystrokes and
+        executes them when possible, make this mode optional
