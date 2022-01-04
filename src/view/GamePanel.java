@@ -15,7 +15,6 @@ public class GamePanel extends JPanel implements ActionListener {
     boolean running = false;
     Timer timer;
     boolean resize = false;
-    int newScreenDimension;
 
     GameLogic gameLogic;
     int screenWidth;
@@ -29,7 +28,7 @@ public class GamePanel extends JPanel implements ActionListener {
     public GamePanel() { //mb add params for snake and food in future?
         this.snake = new Snake();
         this.food = new MainFood();
-        this.gameLogic = new GameLogic(400, 0.1, this.snake, this.food);
+        this.gameLogic = new GameLogic(400, 400, 10, this.snake, this.food);
         this.screenWidth = gameLogic.screenWidth;
         this.screenHeight = gameLogic.screenHeight;
         this.unitSize = gameLogic.unitSize;
@@ -92,17 +91,11 @@ public class GamePanel extends JPanel implements ActionListener {
         g.drawString("Game Over", (screenWidth - metrics2.stringWidth("Game Over")) / 2, screenHeight / 2);
     }
 
-    public void resize(int newScreenDimension) {
-        //System.out.println("resize");
-        resize = true;
-        this.newScreenDimension = newScreenDimension;
-    }
-
-    public void resizeDo(int newScreenDimension) {
+    public void resizeDo() {
         //System.out.println("resizeDo");
-        gameLogic.resizeAdjust(newScreenDimension);
-        this.screenWidth = gameLogic.screenWidth;
-        this.screenHeight = gameLogic.screenHeight;
+        this.screenWidth = this.getWidth();
+        this.screenHeight = this.getHeight();
+        gameLogic.resizeAdjust(screenWidth, screenHeight);
         this.unitSize = gameLogic.unitSize;
         resize = false;
     }
@@ -118,7 +111,7 @@ public class GamePanel extends JPanel implements ActionListener {
             }
         }
         if (resize) {
-            resizeDo(newScreenDimension);
+            resizeDo();
         }
         repaint();
     }

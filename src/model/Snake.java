@@ -8,10 +8,10 @@ public class Snake {
     public int foodEaten;
     public char direction;
 
-    public void updateLocation(int factor) {
+    public void updateLocation(int factorX, int factorY) {
         for (int i = 0; i < bodyParts; i++) {
-            x[i] *= factor;
-            y[i] *= factor;
+            x[i] *= factorX;
+            y[i] *= factorY;
         }
     }
 }

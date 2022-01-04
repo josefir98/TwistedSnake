@@ -6,7 +6,7 @@ public class GameLogic {
 
     public int screenWidth;
     public int screenHeight;
-    public double unitRatio;
+    public int unitRatio;
     public int unitSize;
     public int gameUnits;
 
@@ -17,12 +17,12 @@ public class GameLogic {
     Snake snake;
     MainFood food;
 
-    public GameLogic(int screenDimension, double unitRatio, Snake snake, MainFood food) {
-        this.screenWidth = screenDimension;
-        this.screenHeight = screenDimension;
+    public GameLogic(int width, int height, int unitRatio, Snake snake, MainFood food) {
+        this.screenWidth = width;
+        this.screenHeight = height;
         this.unitRatio = unitRatio;
-        unitSize = (int) (screenDimension * unitRatio);
-        gameUnits = (screenWidth * screenHeight) / (unitSize * unitSize);
+        unitSize = width / unitRatio;
+        gameUnits = (width * height) / (unitSize * unitSize);
 
         this.snake = snake;
         this.snake.x = new int[gameUnits];
@@ -79,13 +79,14 @@ public class GameLogic {
         }
     }
 
-    public void resizeAdjust(int screenDimension) {
+    public void resizeAdjust(int width, int height) {
         //System.out.println(screenDimension);
-        int factor = screenDimension / screenWidth;
-        this.screenWidth = screenDimension;
-        this.screenHeight = screenDimension;
-        unitSize = (int) (screenDimension * unitRatio);
-        snake.updateLocation(factor);
-        food.updateLocation(factor);
+        int factorX = width / screenWidth;
+        int factorY = height / screenHeight;
+        this.screenWidth = width;
+        this.screenHeight = height;
+        unitSize = width / unitRatio;
+        snake.updateLocation(factorX, factorY);
+        food.updateLocation(factorX, factorY);
     }
 }
