@@ -29,6 +29,12 @@ private static void wait(int ms) {
             }
 }
 
+// borderless
+this.dispose();
+this.setUndecorated(true);
+this.pack();
+this.setVisible(true);
+
 TODO:
     1. Make whole game seamlessly resizable
     2. StartMenu

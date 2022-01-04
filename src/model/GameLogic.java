@@ -4,18 +4,26 @@ import java.util.Random;
 
 public class GameLogic {
 
-    public int screenWidth = 600;
-    public int screenHeight = 600;
-    public int unitSize = 25;
-    public int gameUnits = (screenWidth * screenHeight) / (unitSize * unitSize);
-    public int DELAY = 100;
+    public int screenWidth;
+    public int screenHeight;
+    public double unitRatio;
+    public int unitSize;
+    public int gameUnits;
+
+    public int DELAY = 1000;
 
     Random random = new Random();
 
     Snake snake;
     MainFood food;
 
-    public GameLogic(Snake snake, MainFood food) {
+    public GameLogic(int screenDimension, double unitRatio, Snake snake, MainFood food) {
+        this.screenWidth = screenDimension;
+        this.screenHeight = screenDimension;
+        this.unitRatio = unitRatio;
+        unitSize = (int) (screenDimension * unitRatio);
+        gameUnits = (screenWidth * screenHeight) / (unitSize * unitSize);
+
         this.snake = snake;
         this.snake.x = new int[gameUnits];
         this.snake.y = new int[gameUnits];
@@ -69,5 +77,15 @@ public class GameLogic {
             snake.foodEaten++;
             newFood();
         }
+    }
+
+    public void resizeAdjust(int screenDimension) {
+        //System.out.println(screenDimension);
+        int factor = screenDimension / screenWidth;
+        this.screenWidth = screenDimension;
+        this.screenHeight = screenDimension;
+        unitSize = (int) (screenDimension * unitRatio);
+        snake.updateLocation(factor);
+        food.updateLocation(factor);
     }
 }

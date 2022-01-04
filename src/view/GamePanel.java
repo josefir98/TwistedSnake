@@ -14,6 +14,8 @@ public class GamePanel extends JPanel implements ActionListener {
 
     boolean running = false;
     Timer timer;
+    boolean resize = false;
+    int newScreenDimension;
 
     GameLogic gameLogic;
     int screenWidth;
@@ -27,12 +29,12 @@ public class GamePanel extends JPanel implements ActionListener {
     public GamePanel() { //mb add params for snake and food in future?
         this.snake = new Snake();
         this.food = new MainFood();
-        this.gameLogic = new GameLogic(this.snake, this.food);
+        this.gameLogic = new GameLogic(400, 0.1, this.snake, this.food);
         this.screenWidth = gameLogic.screenWidth;
         this.screenHeight = gameLogic.screenHeight;
         this.unitSize = gameLogic.unitSize;
 
-        this.setPreferredSize(new Dimension(600, 600));
+        this.setPreferredSize(new Dimension(this.screenWidth, this.screenHeight));
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addKeyListener(new SnakeKeyAdapter());
@@ -90,6 +92,21 @@ public class GamePanel extends JPanel implements ActionListener {
         g.drawString("Game Over", (screenWidth - metrics2.stringWidth("Game Over")) / 2, screenHeight / 2);
     }
 
+    public void resize(int newScreenDimension) {
+        //System.out.println("resize");
+        resize = true;
+        this.newScreenDimension = newScreenDimension;
+    }
+
+    public void resizeDo(int newScreenDimension) {
+        //System.out.println("resizeDo");
+        gameLogic.resizeAdjust(newScreenDimension);
+        this.screenWidth = gameLogic.screenWidth;
+        this.screenHeight = gameLogic.screenHeight;
+        this.unitSize = gameLogic.unitSize;
+        resize = false;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (running) {
@@ -99,6 +116,9 @@ public class GamePanel extends JPanel implements ActionListener {
                 running = false;
                 timer.stop();
             }
+        }
+        if (resize) {
+            resizeDo(newScreenDimension);
         }
         repaint();
     }
