@@ -2,65 +2,50 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-import model.GameLogic;
+public class GameFrame extends JFrame implements ActionListener {
 
-public class GameFrame extends JFrame {
+    SnakeMenuBar menuBar;
 
+    //System.out.println();
+    GamePanel gamePanel;
     int width;
     int height;
-    double curLongestSide;
-
-    GamePanel gamePanel = new GamePanel();
 
     public GameFrame() {
 
+        // Setup menu bar
+        this.menuBar = new SnakeMenuBar();
+        this.menuBar.exitItem.addActionListener(this);
+        this.menuBar.resolutionItem.addActionListener(this);
+        this.menuBar.fullScreenItem.addActionListener(this);
+        this.setJMenuBar(menuBar);
+
+        // Setup game panel
+        this.gamePanel = new GamePanel();
         this.add(gamePanel);
         this.width = gamePanel.screenWidth;
         this.height = gamePanel.screenHeight;
-        this.curLongestSide = Math.min(width, height);
 
-        //this.setLayout(new GridBagLayout());
+        // Setup game frame
         this.setTitle("Twisted Snake");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setResizable(false);
+        this.setLayout(new GridBagLayout());
         this.pack();
-        this.setVisible(true);
         this.setLocationRelativeTo(null);
-
-        this.addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                //super.componentResized(e);
-
-
-                double newShortestSide = Math.max(getContentPane().getWidth(), getContentPane().getHeight());
-                setBestSize(newShortestSide, curLongestSide, e);
-            }
-        });
+        this.setVisible(true);
     }
 
-    //(shortest side of new) / (longest side of old)
-    //= multiplier for both of the component's dimensions.
-    private void setBestSize(double newShortestSide, double curLongestSide, ComponentEvent e) {
-        //System.out.println(newShortestSide + " " + curLongestSide);
-        double multiplier = newShortestSide / curLongestSide;
-        System.out.println("multiplier " + multiplier);
-        System.out.println("b width " + width);
-        System.out.println("b height " + height);
-        width = closestDivisible((int) (width * multiplier), 10);
-        height = closestDivisible((int) (height * multiplier), 10);
-        System.out.println("a width " + width);
-        System.out.println("a height " + height);
-        this.curLongestSide = Math.min(width, height);
-        gamePanel.setPreferredSize(new Dimension(width, height));
-        //this.setSize(e.getComponent().getSize());
-        this.pack();
-        gamePanel.resize = true;
-    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
 
-    private int closestDivisible(int a, int b) {
-        return a - (a % b);
+        if (e.getSource() == menuBar.exitItem) {
+            System.exit(0);
+        }
     }
 }
+
+//System.out.println();

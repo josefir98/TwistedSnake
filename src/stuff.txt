@@ -29,6 +29,29 @@ private static void wait(int ms) {
             }
 }
 
+this.addComponentListener(new ComponentAdapter() {
+    @Override
+    public void componentResized(ComponentEvent e) {
+    //super.componentResized(e);
+    double newShortestSide = Math.max(getContentPane().getWidth(), getContentPane().getHeight());
+    setBestSize(newShortestSide, curLongestSide, e);
+    }
+});
+//(shortest side of new) / (longest side of old)
+    //= multiplier for both of the component's dimensions.
+    private void setBestSize(double newShortestSide, double curLongestSide, ComponentEvent e) {
+        double multiplier = newShortestSide / curLongestSide;
+        width = closestDivisible((int) (width * multiplier), 10);
+        height = closestDivisible((int) (height * multiplier), 10);
+        this.curLongestSide = Math.min(width, height);
+        this.setPreferredSize(new Dimension(width, height));
+        this.pack();
+        gamePanel.resize = true;
+    }
+    private int closestDivisible(int a, int b) {
+        return a - (a % b);
+    }
+
 // borderless
 this.dispose();
 this.setUndecorated(true);
@@ -36,7 +59,14 @@ this.pack();
 this.setVisible(true);
 
 TODO:
-    1. Make whole game seamlessly resizable
+    1.MenuBars
+        standard resolutions
+            640 x 480   (480p)
+            1280 x 720  (720p)
+            1920 x 1080 (1080p)
+            2560 x 1440 (1440p)
+        fullscreen
+        mute
     2. StartMenu
         Play button
         Options button
@@ -44,10 +74,6 @@ TODO:
         Sound effects and music volume slider
             plus clicking icon mutes
         Credits button
-    3.MenuBars
-        standard resolutions
-        fullscreen
-        mute
 
 
     ideas:

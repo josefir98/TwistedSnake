@@ -12,6 +12,7 @@ import model.Snake;
 
 public class GamePanel extends JPanel implements ActionListener {
 
+    //System.out.println();
     boolean running = false;
     Timer timer;
     boolean resize = false;
@@ -92,7 +93,6 @@ public class GamePanel extends JPanel implements ActionListener {
     }
 
     public void resizeDo() {
-        //System.out.println("resizeDo");
         this.screenWidth = this.getWidth();
         this.screenHeight = this.getHeight();
         gameLogic.resizeAdjust(screenWidth, screenHeight);
@@ -147,3 +147,5 @@ public class GamePanel extends JPanel implements ActionListener {
         }
     }
 }
+
+//System.out.println();
