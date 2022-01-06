@@ -9,8 +9,12 @@ import java.util.Enumeration;
 public class GameFrame extends JFrame implements ActionListener {
 
     SnakeMenuBar menuBar;
+
+    Action exitAction;
+    Action fullscreenAction;
+
     JRadioButtonMenuItem previousRes;
-    boolean fullScreen = false;
+    boolean fullscreen = false;
 
     //System.out.println();
     GamePanel gamePanel;
@@ -25,6 +29,14 @@ public class GameFrame extends JFrame implements ActionListener {
         setupGamePanel(width, height);
         // Setup game frame
         setupGameFrame();
+        // Setup exit key binding
+        this.exitAction = new ExitAction();
+        this.gamePanel.getInputMap().put(KeyStroke.getKeyStroke("control Q"), "exitAction");
+        this.gamePanel.getActionMap().put("exitAction", exitAction);
+        // Setup fullscreen key binding
+        this.fullscreenAction = new FullscreenAction();
+        this.gamePanel.getInputMap().put(KeyStroke.getKeyStroke("control F"), "fullscreenAction");
+        this.gamePanel.getActionMap().put("fullscreenAction", fullscreenAction);
     }
 
     private void setupGameFrame() {
@@ -50,7 +62,7 @@ public class GameFrame extends JFrame implements ActionListener {
 
         this.menuBar.exitItem.addActionListener(this);
 
-        this.menuBar.fullScreenItem.addActionListener(this);
+        this.menuBar.fullscreenItem.addActionListener(this);
         this.menuBar.r480pItem.addActionListener(this);
         this.menuBar.r480pItem.setSelected(true);
         this.menuBar.r720pItem.addActionListener(this);
@@ -70,6 +82,33 @@ public class GameFrame extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
     }
 
+    private void toggleFullscreen() {
+        if (fullscreen) {
+            menuBar.setVisible(true);
+            previousRes.doClick();
+            this.dispose();
+            this.setUndecorated(false);
+            this.pack();
+            this.setLocationRelativeTo(null);
+            this.setVisible(true);
+            fullscreen = false;
+        } else {
+            previousRes = (JRadioButtonMenuItem) getSelectedButton(menuBar.resolutionGroup);
+            Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+            this.width = size.width;
+            this.height = size.height;
+            this.dispose();
+            this.setUndecorated(true);
+            this.getContentPane().setPreferredSize(size);
+            this.pack();
+            this.setLocationRelativeTo(null);
+            this.setVisible(true);
+            gamePanel.sizeAdjust(width, height);
+            menuBar.setVisible(false);
+            fullscreen = true;
+        }
+    }
+
     private AbstractButton getSelectedButton(ButtonGroup buttonGroup) {
         for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
             AbstractButton button = buttons.nextElement();
@@ -87,23 +126,8 @@ public class GameFrame extends JFrame implements ActionListener {
             System.exit(0);
         }
         // Fullscreen
-        if (e.getSource() == menuBar.fullScreenItem) {
-            if (fullScreen) {
-                previousRes.doClick();
-                this.setLocationRelativeTo(null);
-                fullScreen = false;
-            } else {
-                previousRes = (JRadioButtonMenuItem) getSelectedButton(menuBar.resolutionGroup);
-                this.dispose();
-                this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-                this.setUndecorated(true);
-                this.setVisible(true);
-                this.width = this.getContentPane().getWidth();
-                this.height = this.getContentPane().getHeight();
-                //this.pack();
-                gamePanel.sizeAdjust(width, height);
-                fullScreen = true;
-            }
+        if (e.getSource() == menuBar.fullscreenItem) {
+            toggleFullscreen();
         }
         // 640 x 480   (480p)
         if (e.getSource() == menuBar.r480pItem) {
@@ -245,6 +269,19 @@ public class GameFrame extends JFrame implements ActionListener {
             this.pack();
             gamePanel.sizeAdjust(1000, 1000);
             this.setVisible(true);
+        }
+    }
+
+    public class FullscreenAction extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            toggleFullscreen();
+        }
+    }
+    public class ExitAction extends AbstractAction{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.exit(0);
         }
     }
 }

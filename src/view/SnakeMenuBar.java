@@ -10,7 +10,7 @@ public class SnakeMenuBar extends JMenuBar {
     public JMenu displayMenu;
     public JMenu resolutionItem;
     public ButtonGroup resolutionGroup;
-    public JMenuItem fullScreenItem;
+    public JMenuItem fullscreenItem;
     public JRadioButtonMenuItem r480pItem;
     public JRadioButtonMenuItem r720pItem;
     public JRadioButtonMenuItem r1080pItem;
@@ -42,8 +42,8 @@ public class SnakeMenuBar extends JMenuBar {
         // Setup Display
         displayMenu = new JMenu("Display");
         resolutionItem = new JMenu("Resolution");
-        fullScreenItem = new JMenuItem("Fullscreen");
-        fullScreenItem.setAccelerator(KeyStroke.getKeyStroke("control F"));
+        fullscreenItem = new JMenuItem("Fullscreen");
+        fullscreenItem.setAccelerator(KeyStroke.getKeyStroke("control F"));
         r480pItem = new JRadioButtonMenuItem("640 x 480");
         r720pItem = new JRadioButtonMenuItem("1280 x 720");
         r1080pItem = new JRadioButtonMenuItem("1920 x 1080");
@@ -76,7 +76,7 @@ public class SnakeMenuBar extends JMenuBar {
         resolutionGroup.add(r1000sItem);
 
         this.add(displayMenu);
-        displayMenu.add(fullScreenItem);
+        displayMenu.add(fullscreenItem);
         displayMenu.add(new JSeparator());
         displayMenu.add(resolutionItem);
         resolutionItem.add(r480pItem);

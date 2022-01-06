@@ -18,11 +18,11 @@ public class GameLogic {
     MainFood food;
 
     public GameLogic(int width, int height, int unitRatio, Snake snake, MainFood food) {
-        this.screenWidth = width;
-        this.screenHeight = height;
+        this.screenWidth = closestDivisible(width, unitRatio);
+        this.screenHeight = closestDivisible(height, unitRatio);
         this.unitRatio = unitRatio;
-        unitSize = width / unitRatio;
-        gameUnits = (width * height) / (unitSize * unitSize);
+        this.unitSize = this.screenWidth / unitRatio;
+        this.gameUnits = (this.screenWidth * this.screenHeight) / (unitSize * unitSize);
 
         this.snake = snake;
         this.snake.x = new int[gameUnits];
@@ -80,13 +80,20 @@ public class GameLogic {
     }
 
     public void sizeAdjust(int width, int height) {
-        float factorX = (float) width / screenWidth;
-        float factorY = (float) height / screenHeight;
+        int bWidth = closestDivisible(width, unitRatio);
+        int bHeight = closestDivisible(height, unitRatio);
+        float factorX = (float) bWidth / screenWidth;
+        float factorY = (float) bHeight / screenHeight;
         snake.updateLocation(factorX, factorY);
         food.updateLocation(factorX, factorY);
-        this.screenWidth = width;
-        this.screenHeight = height;
-        unitSize = width / unitRatio;
+        this.screenWidth = bWidth;
+        this.screenHeight = bHeight;
+        this.unitSize = (int) ((float) bWidth / unitRatio);
+        this.gameUnits = (int) ((float) (bWidth * bHeight) / (unitSize * unitSize));
+    }
+
+    private int closestDivisible(int a, int b) {
+        return a - (a % b);
     }
 }
 

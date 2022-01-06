@@ -60,17 +60,8 @@ this.setVisible(true);
 
 TODO: fixes
     Food can spawn inside snake.
-    Make start resolution be by code pressing resolution button,
-    and make start resolution be checked on start
-    When going out of fullscreen size adjustsment is a bit off
-    When fullscreen remove menu bar
-    When fullscreen make border appear again.
 
 TODO:
-    1.MenuBars
-        standard resolutions
-        fullscreen
-        mute
     2. StartMenu
         Play button
         Options button
@@ -89,7 +80,7 @@ TODO:
 
         Survive timer / wave mode
 
-        make it beautyful elegant and quality of lify
+        make it beautiful elegant and quality of life
 
         add an action queue so the game registers all keystrokes and
         executes them when possible, make this mode optional
