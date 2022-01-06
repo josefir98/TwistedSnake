@@ -58,13 +58,17 @@ this.setUndecorated(true);
 this.pack();
 this.setVisible(true);
 
+TODO: fixes
+    Food can spawn inside snake.
+    Make start resolution be by code pressing resolution button,
+    and make start resolution be checked on start
+    When going out of fullscreen size adjustsment is a bit off
+    When fullscreen remove menu bar
+    When fullscreen make border appear again.
+
 TODO:
     1.MenuBars
         standard resolutions
-            640 x 480   (480p)
-            1280 x 720  (720p)
-            1920 x 1080 (1080p)
-            2560 x 1440 (1440p)
         fullscreen
         mute
     2. StartMenu
