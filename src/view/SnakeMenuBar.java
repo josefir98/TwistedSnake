@@ -9,6 +9,10 @@ public class SnakeMenuBar extends JMenuBar {
 
     public JMenu displayMenu;
     public JMenu resolutionItem;
+    public JMenuItem r480pItem;
+    public JMenuItem r720pItem;
+    public JMenuItem r1080pItem;
+    public JMenuItem r1440pItem;
     public JMenuItem fullScreenItem;
 
     public JMenu soundMenu;
@@ -25,13 +29,17 @@ public class SnakeMenuBar extends JMenuBar {
         // Setup Display
         displayMenu = new JMenu("Display");
         resolutionItem = new JMenu("Resolution");
-        // 640 x 480   (480p)
-        // 1280 x 720  (720p)
-        // 1920 x 1080 (1080p)
-        // 2560 x 1440 (1440p)
+        r480pItem = new JMenuItem("640 x 480        (480p)");
+        r720pItem = new JMenuItem("1280 x 720      (720p)");
+        r1080pItem = new JMenuItem("1920 x 1080    (1080p)");
+        r1440pItem = new JMenuItem("2560 x 1440    (1440p)");
         fullScreenItem = new JMenuItem("Fullscreen");
         this.add(displayMenu);
         displayMenu.add(resolutionItem);
+        resolutionItem.add(r480pItem);
+        resolutionItem.add(r720pItem);
+        resolutionItem.add(r1080pItem);
+        resolutionItem.add(r1440pItem);
         displayMenu.add(fullScreenItem);
 
         // Setup Sound

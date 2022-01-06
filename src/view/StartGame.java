@@ -3,6 +3,6 @@ package view;
 public class StartGame {
 
     public static void main(String[] args) {
-        new GameFrame();
+        new GameFrame(640, 480);
     }
 }

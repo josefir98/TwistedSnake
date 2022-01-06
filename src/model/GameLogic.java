@@ -79,14 +79,15 @@ public class GameLogic {
         }
     }
 
-    public void resizeAdjust(int width, int height) {
-        //System.out.println(screenDimension);
-        int factorX = width / screenWidth;
-        int factorY = height / screenHeight;
+    public void sizeAdjust(int width, int height) {
+        float factorX = (float) width / screenWidth;
+        float factorY = (float) height / screenHeight;
+        snake.updateLocation(factorX, factorY);
+        food.updateLocation(factorX, factorY);
         this.screenWidth = width;
         this.screenHeight = height;
         unitSize = width / unitRatio;
-        snake.updateLocation(factorX, factorY);
-        food.updateLocation(factorX, factorY);
     }
 }
+
+//System.out.println();
