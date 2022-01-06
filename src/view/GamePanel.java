@@ -94,13 +94,11 @@ public class GamePanel extends JPanel implements ActionListener {
         int newDimension = Math.min(width, height);
         if (resize) {
             gameLogic.sizeAdjust(newDimension, newDimension);
-            this.screenWidth = newDimension;
-            this.screenHeight = newDimension;
         } else {
             this.gameLogic = new GameLogic(newDimension, newDimension, 10, this.snake, this.food);
-            this.screenWidth = newDimension;
-            this.screenHeight = newDimension;
         }
+        this.screenWidth = newDimension;
+        this.screenHeight = newDimension;
         this.unitSize = gameLogic.unitSize;
         this.setPreferredSize(new Dimension(newDimension, newDimension));
         this.revalidate();
