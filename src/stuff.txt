@@ -60,6 +60,9 @@ this.setVisible(true);
 
 TODO: fixes
     Food can spawn inside snake.
+        - make an array with free spots
+        - check if food has spwaned inside snake and respawn
+        - use getRandomWithExclusion
 
 TODO:
     2. StartMenu

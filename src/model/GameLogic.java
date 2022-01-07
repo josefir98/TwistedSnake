@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public class GameLogic {
@@ -10,7 +11,7 @@ public class GameLogic {
     public int unitSize;
     public int gameUnits;
 
-    public int DELAY = 1000;
+    public int DELAY = 150;
 
     Random random = new Random();
 
@@ -33,8 +34,33 @@ public class GameLogic {
     }
 
     public void newFood() {
-        food.x = random.nextInt(screenWidth / unitSize) * unitSize;
-        food.y = random.nextInt(screenHeight / unitSize) * unitSize;
+        int maxX = screenWidth / unitSize;
+        int maxY = screenHeight / unitSize;
+
+        int[] excludeX = new int[snake.bodyParts];
+        int[] excludeY = new int[snake.bodyParts];
+        for (int i = 0; i < snake.bodyParts; i++) {
+            excludeX[i] = snake.x[i];
+            excludeY[i] = snake.y[i];
+        }
+        Arrays.sort(excludeX);
+        Arrays.sort(excludeY);
+
+        food.x = getRandomWithExclusion(random, 0, maxX, excludeX);
+        food.y = getRandomWithExclusion(random, 0, maxY, excludeY);
+        //food.x = random.nextInt(screenWidth / unitSize) * unitSize;
+        //food.y = random.nextInt(screenHeight / unitSize) * unitSize;
+    }
+
+    private int getRandomWithExclusion(Random rnd, int start, int end, int... exclude) {
+        int random = start + rnd.nextInt(end - start + 1 - exclude.length);
+        for (int ex : exclude) {
+            if (random < ex) {
+                break;
+            }
+            random++;
+        }
+        return random;
     }
 
     public void move() {

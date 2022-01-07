@@ -60,7 +60,7 @@ public class GamePanel extends JPanel implements ActionListener {
             }
             //draw food
             g.setColor(Color.RED);
-            g.fillOval(food.x, food.y, unitSize, unitSize);
+            g.fillOval(food.x * unitSize, food.y * unitSize, unitSize, unitSize);
             //draw snake
             for (int i = 0; i < snake.bodyParts; i++) {
                 if (i == 0) {
