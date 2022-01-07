@@ -11,7 +11,7 @@ public class GameLogic {
     public int unitSize;
     public int gameUnits;
 
-    public int DELAY = 200;
+    public int DELAY = 1000;
 
     Random random = new Random();
 

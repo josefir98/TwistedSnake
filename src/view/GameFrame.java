@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
+import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
+
 public class GameFrame extends JFrame implements ActionListener {
 
     SnakeMenuBar menuBar;
@@ -17,26 +19,28 @@ public class GameFrame extends JFrame implements ActionListener {
     boolean fullscreen = false;
 
     //System.out.println();
-    GamePanel gamePanel;
+    BackgroundPanel backgroundPanel;
     int width;
     int height;
 
     public GameFrame(int width, int height) {
-
+        this.width = width;
+        this.height = height;
         // Setup menu bar
         setupMenuBar();
         // Setup game panel
-        setupGamePanel(width, height);
+        setupBackgroundPanel();
         // Setup game frame
         setupGameFrame();
         // Setup exit key binding
+        int condition = WHEN_IN_FOCUSED_WINDOW;
         this.exitAction = new ExitAction();
-        this.gamePanel.getInputMap().put(KeyStroke.getKeyStroke("control Q"), "exitAction");
-        this.gamePanel.getActionMap().put("exitAction", exitAction);
+        this.backgroundPanel.getInputMap(condition).put(KeyStroke.getKeyStroke("control Q"), "exitAction");
+        this.backgroundPanel.getActionMap().put("exitAction", exitAction);
         // Setup fullscreen key binding
         this.fullscreenAction = new FullscreenAction();
-        this.gamePanel.getInputMap().put(KeyStroke.getKeyStroke("control F"), "fullscreenAction");
-        this.gamePanel.getActionMap().put("fullscreenAction", fullscreenAction);
+        this.backgroundPanel.getInputMap(condition).put(KeyStroke.getKeyStroke("control F"), "fullscreenAction");
+        this.backgroundPanel.getActionMap().put("fullscreenAction", fullscreenAction);
     }
 
     private void setupGameFrame() {
@@ -50,11 +54,9 @@ public class GameFrame extends JFrame implements ActionListener {
         this.setVisible(true);
     }
 
-    private void setupGamePanel(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.gamePanel = new GamePanel(width, height);
-        this.add(gamePanel);
+    private void setupBackgroundPanel() {
+        this.backgroundPanel = new BackgroundPanel(width, height);
+        this.add(backgroundPanel);
     }
 
     private void setupMenuBar() {
@@ -103,7 +105,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.pack();
             this.setLocationRelativeTo(null);
             this.setVisible(true);
-            gamePanel.sizeAdjust(width, height);
+            backgroundPanel.sizeAdjust(width, height);
             menuBar.setVisible(false);
             fullscreen = true;
         }
@@ -136,7 +138,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(640, 480);
+            backgroundPanel.sizeAdjust(640, 480);
             this.setVisible(true);
         }
 
@@ -147,7 +149,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(1280, 720);
+            backgroundPanel.sizeAdjust(1280, 720);
             this.setVisible(true);
         }
         // 1920 x 1080 (1080p)
@@ -157,7 +159,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(1920, 1080);
+            backgroundPanel.sizeAdjust(1920, 1080);
             this.setVisible(true);
         }
         // 2560 x 1440 (1440p)
@@ -167,7 +169,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(2560, 1440);
+            backgroundPanel.sizeAdjust(2560, 1440);
             this.setVisible(true);
         }
         // 100 x 100
@@ -177,7 +179,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(100, 100);
+            backgroundPanel.sizeAdjust(100, 100);
             this.setVisible(true);
         }
         // 200 x 200
@@ -187,7 +189,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(200, 200);
+            backgroundPanel.sizeAdjust(200, 200);
             this.setVisible(true);
         }
         // 300 x 300
@@ -197,7 +199,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(300, 300);
+            backgroundPanel.sizeAdjust(300, 300);
             this.setVisible(true);
         }
         // 400 x 400
@@ -207,7 +209,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(400, 400);
+            backgroundPanel.sizeAdjust(400, 400);
             this.setVisible(true);
         }
         // 500 x 500
@@ -217,7 +219,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(500, 500);
+            backgroundPanel.sizeAdjust(500, 500);
             this.setVisible(true);
         }
         // 600 x 600
@@ -227,7 +229,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(600, 600);
+            backgroundPanel.sizeAdjust(600, 600);
             this.setVisible(true);
         }
         // 700 x 700
@@ -237,7 +239,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(700, 700);
+            backgroundPanel.sizeAdjust(700, 700);
             this.setVisible(true);
         }
         // 800 x 800
@@ -247,7 +249,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(800, 800);
+            backgroundPanel.sizeAdjust(800, 800);
             this.setVisible(true);
         }
         // 900 x 900
@@ -257,7 +259,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(900, 900);
+            backgroundPanel.sizeAdjust(900, 900);
             this.setVisible(true);
         }
         // 1000 x 1000
@@ -267,7 +269,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            gamePanel.sizeAdjust(1000, 1000);
+            backgroundPanel.sizeAdjust(1000, 1000);
             this.setVisible(true);
         }
     }
