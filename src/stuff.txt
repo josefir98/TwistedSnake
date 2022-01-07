@@ -1,3 +1,32 @@
+TODO: fixes
+
+TODO:
+    2. StartMenu
+        Play button
+        Options button
+            fullscreen
+        Sound effects and music volume slider
+            plus clicking icon mutes
+        Credits button
+
+
+    ideas:
+        wiggling tail
+
+        changing color mechanic
+
+        Save system for progression and settings
+
+        Survive timer / wave mode
+
+        make it beautiful elegant and quality of life
+
+        add an action queue so the game registers all keystrokes and
+        executes them when possible, make this mode optional
+
+
+
+
 //checks for collision with walls
         if (snake.y[0] < 0) {
             running = false;
@@ -58,32 +87,36 @@ this.setUndecorated(true);
 this.pack();
 this.setVisible(true);
 
-TODO: fixes
-    Food can spawn inside snake.
-        - make an array with free spots
-        - check if food has spwaned inside snake and respawn
-        - use getRandomWithExclusion
+for (int i = 0; i < snake.bodyParts; i++) {
+    excludeX[i] = snake.x[i];
+    excludeY[i] = snake.y[i];
+}
 
-TODO:
-    2. StartMenu
-        Play button
-        Options button
-            fullscreen
-        Sound effects and music volume slider
-            plus clicking icon mutes
-        Credits button
+int maxX = (screenWidth / unitSize) - 1;
+        int maxY = (screenHeight / unitSize) - 1;
 
+        int[] excludeX = divAllBy(Arrays.stream(snake.x).distinct().sorted().toArray(), unitSize);
+        int[] excludeY = divAllBy(Arrays.stream(snake.x).distinct().sorted().toArray(), unitSize);
 
-    ideas:
-        wiggling tail
+        food.x = getRandomWithExclusion(random, 0, maxX, excludeX) * unitSize;
+        food.y = getRandomWithExclusion(random, 0, maxY, excludeY) * unitSize;
 
-        changing color mechanic
+        private int[] divAllBy(int[] arr, int x) {
+                int[] result = new int[arr.length];
+                for(int a = 0; a < arr.length; a++)
+                {
+                    result[a] = arr[a]/x;
+                }
+                return result;
+            }
 
-        Save system for progression and settings
-
-        Survive timer / wave mode
-
-        make it beautiful elegant and quality of life
-
-        add an action queue so the game registers all keystrokes and
-        executes them when possible, make this mode optional
+            private int getRandomWithExclusion(Random rnd, int start, int end, int... exclude) {
+                int random = start + rnd.nextInt(end - start + 1 - exclude.length);
+                for (int ex : exclude) {
+                    if (random < ex) {
+                        break;
+                    }
+                    random++;
+                }
+                return random;
+            }
