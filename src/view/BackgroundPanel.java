@@ -7,13 +7,24 @@ public class BackgroundPanel extends JPanel {
 
     int width;
     int height;
+
+    MainMenuPanel mainMenuPanel;
     GamePanel gamePanel;
+
     public BackgroundPanel(int width, int height) {
         this.width = width;
         this.height = height;
+        // Setup main menu panel
+        setupMainMenuPanel();
         // Setup game panel
-        setupGamePanel();
+        //setupGamePanel();
+        // Setup background panel
         setupBackgroundPanel();
+    }
+
+    private void setupMainMenuPanel() {
+        this.mainMenuPanel = new MainMenuPanel(width, height);
+        this.add(mainMenuPanel);
     }
 
     private void setupBackgroundPanel() {
@@ -33,6 +44,7 @@ public class BackgroundPanel extends JPanel {
         this.height = height;
         this.setPreferredSize(new Dimension(width, height));
         this.revalidate();
-        gamePanel.sizeAdjust(width, height);
+        mainMenuPanel.sizeAdjust(width, height);
+        //gamePanel.sizeAdjust(width, height);
     }
 }
