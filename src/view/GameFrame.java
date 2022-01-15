@@ -28,7 +28,7 @@ public class GameFrame extends JFrame implements ActionListener {
         this.height = height;
         // Setup menu bar
         setupMenuBar();
-        // Setup game panel
+        // Setup Background panel
         setupBackgroundPanel();
         // Setup game frame
         setupGameFrame();
