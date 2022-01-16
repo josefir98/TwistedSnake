@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
+import static java.lang.System.*;
 import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
 
 public class GameFrame extends JFrame implements ActionListener {
@@ -52,6 +53,7 @@ public class GameFrame extends JFrame implements ActionListener {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
+        out.println("");
     }
 
     private void setupBackgroundPanel() {
