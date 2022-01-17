@@ -2,12 +2,9 @@ TODO: fixes
 
 TODO:
     2. StartMenu
-        Play button
-        Options button
-            fullscreen
         Sound effects and music volume slider
             plus clicking icon mutes
-        Credits button
+        About button
 
 
     ideas:

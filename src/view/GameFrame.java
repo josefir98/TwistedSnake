@@ -1,5 +1,7 @@
 package view;
 
+import view.menues.SnakeMenuBar;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +16,7 @@ public class GameFrame extends JFrame implements ActionListener {
     Action fullscreenAction;
 
     JRadioButtonMenuItem previousRes;
-    boolean fullscreen = false;
+    public boolean fullscreen = false;
 
     //System.out.println();
     BackgroundPanel backgroundPanel;
@@ -31,6 +33,13 @@ public class GameFrame extends JFrame implements ActionListener {
         // Setup game frame
         setupGameFrame();
         setupKeyBinds();
+
+        Timer timer = new Timer(100, e -> {
+            if (backgroundPanel.fullscreen != fullscreen) {
+                toggleFullscreen();
+            }
+        });
+        timer.start();
     }
 
     private void setupKeyBinds() {
@@ -57,7 +66,7 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
     private void setupBackgroundPanel() {
-        this.backgroundPanel = new BackgroundPanel(width, height);
+        this.backgroundPanel = new BackgroundPanel(width, height, fullscreen);
         this.add(backgroundPanel);
     }
 
@@ -86,17 +95,16 @@ public class GameFrame extends JFrame implements ActionListener {
         this.setJMenuBar(menuBar);
     }
 
-    private void toggleFullscreen() {
+    public void toggleFullscreen() {
         if (fullscreen) {
-            menuBar.setVisible(true);
-            previousRes.doClick();
-            this.dispose();
-            this.setUndecorated(false);
-            this.pack();
-            this.setLocationRelativeTo(null);
-            this.setVisible(true);
             fullscreen = false;
+            this.dispose();
+            menuBar.setVisible(true);
+            this.setUndecorated(false);
+            previousRes.doClick();
+            this.pack();
         } else {
+            fullscreen = true;
             previousRes = (JRadioButtonMenuItem) getSelectedButton(menuBar.resolutionGroup);
             Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
             this.width = size.width;
@@ -105,12 +113,11 @@ public class GameFrame extends JFrame implements ActionListener {
             this.setUndecorated(true);
             this.getContentPane().setPreferredSize(size);
             this.pack();
-            this.setLocationRelativeTo(null);
-            this.setVisible(true);
-            backgroundPanel.sizeAdjust(width, height);
+            backgroundPanel.sizeAdjust(width, height, fullscreen);
             menuBar.setVisible(false);
-            fullscreen = true;
         }
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
     }
 
     private AbstractButton getSelectedButton(ButtonGroup buttonGroup) {
@@ -131,6 +138,7 @@ public class GameFrame extends JFrame implements ActionListener {
         }
         // Fullscreen
         if (e.getSource() == menuBar.fullscreenItem) {
+            System.out.println("ddd");
             toggleFullscreen();
         }
         // 640 x 480   (480p)
@@ -140,7 +148,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(640, 480);
+            backgroundPanel.sizeAdjust(640, 480, fullscreen);
             this.setVisible(true);
         }
 
@@ -151,7 +159,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(1280, 720);
+            backgroundPanel.sizeAdjust(1280, 720, fullscreen);
             this.setVisible(true);
         }
         // 1920 x 1080 (1080p)
@@ -161,7 +169,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(1920, 1080);
+            backgroundPanel.sizeAdjust(1920, 1080, fullscreen);
             this.setVisible(true);
         }
         // 2560 x 1440 (1440p)
@@ -171,7 +179,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(2560, 1440);
+            backgroundPanel.sizeAdjust(2560, 1440, fullscreen);
             this.setVisible(true);
         }
         // 100 x 100
@@ -181,7 +189,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(100, 100);
+            backgroundPanel.sizeAdjust(100, 100, fullscreen);
             this.setVisible(true);
         }
         // 200 x 200
@@ -191,7 +199,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(200, 200);
+            backgroundPanel.sizeAdjust(200, 200, fullscreen);
             this.setVisible(true);
         }
         // 300 x 300
@@ -201,7 +209,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(300, 300);
+            backgroundPanel.sizeAdjust(300, 300, fullscreen);
             this.setVisible(true);
         }
         // 400 x 400
@@ -211,7 +219,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(400, 400);
+            backgroundPanel.sizeAdjust(400, 400, fullscreen);
             this.setVisible(true);
         }
         // 500 x 500
@@ -221,7 +229,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(500, 500);
+            backgroundPanel.sizeAdjust(500, 500, fullscreen);
             this.setVisible(true);
         }
         // 600 x 600
@@ -231,7 +239,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(600, 600);
+            backgroundPanel.sizeAdjust(600, 600, fullscreen);
             this.setVisible(true);
         }
         // 700 x 700
@@ -241,7 +249,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(700, 700);
+            backgroundPanel.sizeAdjust(700, 700, fullscreen);
             this.setVisible(true);
         }
         // 800 x 800
@@ -251,7 +259,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(800, 800);
+            backgroundPanel.sizeAdjust(800, 800, fullscreen);
             this.setVisible(true);
         }
         // 900 x 900
@@ -261,7 +269,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(900, 900);
+            backgroundPanel.sizeAdjust(900, 900, fullscreen);
             this.setVisible(true);
         }
         // 1000 x 1000
@@ -271,7 +279,7 @@ public class GameFrame extends JFrame implements ActionListener {
             this.dispose();
             this.getContentPane().setPreferredSize(new Dimension(width, height));
             this.pack();
-            backgroundPanel.sizeAdjust(1000, 1000);
+            backgroundPanel.sizeAdjust(1000, 1000, fullscreen);
             this.setVisible(true);
         }
     }
@@ -283,7 +291,7 @@ public class GameFrame extends JFrame implements ActionListener {
         }
     }
 
-    public class ExitAction extends AbstractAction {
+    public static class ExitAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);

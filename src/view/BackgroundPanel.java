@@ -1,5 +1,8 @@
 package view;
 
+import view.menues.MainMenuPanel;
+import view.menues.OptionsMenuPanel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -9,22 +12,25 @@ public class BackgroundPanel extends JPanel implements ActionListener {
 
     int width;
     int height;
+    boolean fullscreen;
 
     MainMenuPanel mainMenuPanel;
     GamePanel gamePanel;
+    OptionsMenuPanel optionsMenuPanel;
 
-    private Timer timer;
     private boolean game = false;
+    private boolean options = false;
 
-    public BackgroundPanel(int width, int height) {
+    public BackgroundPanel(int width, int height, boolean fullscreen) {
         this.width = width;
         this.height = height;
+        this.fullscreen = fullscreen;
         // Setup main menu panel
         setupMainMenuPanel();
         // Setup background panel
         setupBackgroundPanel();
 
-        timer = new Timer(100, this);
+        Timer timer = new Timer(100, this);
         timer.start();
     }
 
@@ -40,35 +46,56 @@ public class BackgroundPanel extends JPanel implements ActionListener {
         this.setPreferredSize(new Dimension(width, height));
     }
 
+    public void sizeAdjust(int width, int height, boolean fullscreen) {
+        this.width = width;
+        this.height = height;
+        this.fullscreen = fullscreen;
+
+        this.setPreferredSize(new Dimension(width, height));
+        if (game) {
+            gamePanel.sizeAdjust(width, height);
+        } else if (options) {
+            optionsMenuPanel.sizeAdjust(width, height, fullscreen);
+        } else {
+            mainMenuPanel.sizeAdjust(width, height);
+        }
+        this.revalidate();
+        this.repaint();
+    }
+
     public void setupGamePanel() {
         game = true;
         this.gamePanel = new GamePanel(width, height);
         this.add(gamePanel);
         this.revalidate();
         this.repaint();
-        gamePanel.setFocusable(true);
     }
 
-    public void sizeAdjust(int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.setPreferredSize(new Dimension(width, height));
+    public void setupOptionsMenuPanel() {
+        options = true;
+        this.optionsMenuPanel = new OptionsMenuPanel(width, height, fullscreen);
+        this.add(optionsMenuPanel);
         this.revalidate();
-        if (game) {
-            gamePanel.sizeAdjust(width, height);
-        } else {
-            mainMenuPanel.sizeAdjust(width, height);
-        }
+        this.repaint();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (mainMenuPanel.startGame) {
-            timer.stop();
-            this.removeAll();
-            setupGamePanel();
+        boolean update = !((game == mainMenuPanel.startGame) && (options == mainMenuPanel.startOptions));
+
+        if (update) {
+            if (mainMenuPanel.startGame) {
+                this.removeAll();
+                setupGamePanel();
+            } else if (mainMenuPanel.startOptions) {
+                this.removeAll();
+                setupOptionsMenuPanel();
+            }
             this.revalidate();
             this.repaint();
+        }
+        if (optionsMenuPanel != null) {
+            this.fullscreen = optionsMenuPanel.fullscreenButton.isSelected();
         }
     }
 }
