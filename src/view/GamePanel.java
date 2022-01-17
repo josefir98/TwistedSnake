@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
 import model.GameLogic;
 import model.MainFood;
 import model.Snake;
@@ -14,7 +15,7 @@ public class GamePanel extends JPanel implements ActionListener {
 
     //System.out.println();
     boolean running = false;
-    Timer timer;
+    private Timer timer;
     boolean resize = false;
 
     GameLogic gameLogic;
@@ -35,8 +36,23 @@ public class GamePanel extends JPanel implements ActionListener {
         sizeAdjustDo(width, height);
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
-        this.addKeyListener(new SnakeKeyAdapter());
+        setupKeyBinds();
         startGame();
+    }
+
+    private void setupKeyBinds() {
+        int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
+        this.getInputMap(condition).put(KeyStroke.getKeyStroke("UP"), "UpAction");
+        this.getActionMap().put("UpAction", new SnakeKeyHandler('U'));
+
+        this.getInputMap(condition).put(KeyStroke.getKeyStroke("DOWN"), "DownAction");
+        this.getActionMap().put("DownAction", new SnakeKeyHandler('D'));
+
+        this.getInputMap(condition).put(KeyStroke.getKeyStroke("LEFT"), "LeftAction");
+        this.getActionMap().put("LeftAction", new SnakeKeyHandler('L'));
+
+        this.getInputMap(condition).put(KeyStroke.getKeyStroke("RIGHT"), "RightAction");
+        this.getActionMap().put("RightAction", new SnakeKeyHandler('R'));
     }
 
     public void startGame() {
@@ -127,27 +143,33 @@ public class GamePanel extends JPanel implements ActionListener {
         repaint();
     }
 
-    public class SnakeKeyAdapter extends KeyAdapter {
+    public class SnakeKeyHandler extends AbstractAction {
+        char dir;
+
+        public SnakeKeyHandler(char dir) {
+            this.dir = dir;
+        }
+
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void actionPerformed(ActionEvent e) {
             if (canTurn) {
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_UP:
+                switch (dir) {
+                    case 'U':
                         if (snake.direction != 'D') {
                             snake.direction = 'U';
                         }
                         break;
-                    case KeyEvent.VK_DOWN:
+                    case 'D':
                         if (snake.direction != 'U') {
                             snake.direction = 'D';
                         }
                         break;
-                    case KeyEvent.VK_LEFT:
+                    case 'L':
                         if (snake.direction != 'R') {
                             snake.direction = 'L';
                         }
                         break;
-                    case KeyEvent.VK_RIGHT:
+                    case 'R':
                         if (snake.direction != 'L') {
                             snake.direction = 'R';
                         }

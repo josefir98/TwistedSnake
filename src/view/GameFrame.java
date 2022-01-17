@@ -6,9 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Enumeration;
 
-import static java.lang.System.*;
-import static javax.swing.JComponent.WHEN_IN_FOCUSED_WINDOW;
-
 public class GameFrame extends JFrame implements ActionListener {
 
     SnakeMenuBar menuBar;
@@ -33,8 +30,12 @@ public class GameFrame extends JFrame implements ActionListener {
         setupBackgroundPanel();
         // Setup game frame
         setupGameFrame();
+        setupKeyBinds();
+    }
+
+    private void setupKeyBinds() {
         // Setup exit key binding
-        int condition = WHEN_IN_FOCUSED_WINDOW;
+        int condition = JComponent.WHEN_IN_FOCUSED_WINDOW;
         this.exitAction = new ExitAction();
         this.backgroundPanel.getInputMap(condition).put(KeyStroke.getKeyStroke("control Q"), "exitAction");
         this.backgroundPanel.getActionMap().put("exitAction", exitAction);
@@ -53,7 +54,6 @@ public class GameFrame extends JFrame implements ActionListener {
         this.pack();
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-        out.println("");
     }
 
     private void setupBackgroundPanel() {
@@ -114,7 +114,7 @@ public class GameFrame extends JFrame implements ActionListener {
     }
 
     private AbstractButton getSelectedButton(ButtonGroup buttonGroup) {
-        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements(); ) {
             AbstractButton button = buttons.nextElement();
             if (button.isSelected()) {
                 return button;
@@ -276,13 +276,14 @@ public class GameFrame extends JFrame implements ActionListener {
         }
     }
 
-    public class FullscreenAction extends AbstractAction{
+    public class FullscreenAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
             toggleFullscreen();
         }
     }
-    public class ExitAction extends AbstractAction{
+
+    public class ExitAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);

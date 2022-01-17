@@ -2,8 +2,10 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class BackgroundPanel extends JPanel {
+public class BackgroundPanel extends JPanel implements ActionListener {
 
     int width;
     int height;
@@ -11,15 +13,19 @@ public class BackgroundPanel extends JPanel {
     MainMenuPanel mainMenuPanel;
     GamePanel gamePanel;
 
+    private Timer timer;
+    private boolean game = false;
+
     public BackgroundPanel(int width, int height) {
         this.width = width;
         this.height = height;
         // Setup main menu panel
         setupMainMenuPanel();
-        // Setup game panel
-        //setupGamePanel();
         // Setup background panel
         setupBackgroundPanel();
+
+        timer = new Timer(100, this);
+        timer.start();
     }
 
     private void setupMainMenuPanel() {
@@ -34,9 +40,13 @@ public class BackgroundPanel extends JPanel {
         this.setPreferredSize(new Dimension(width, height));
     }
 
-    private void setupGamePanel() {
+    public void setupGamePanel() {
+        game = true;
         this.gamePanel = new GamePanel(width, height);
         this.add(gamePanel);
+        this.revalidate();
+        this.repaint();
+        gamePanel.setFocusable(true);
     }
 
     public void sizeAdjust(int width, int height) {
@@ -44,7 +54,21 @@ public class BackgroundPanel extends JPanel {
         this.height = height;
         this.setPreferredSize(new Dimension(width, height));
         this.revalidate();
-        mainMenuPanel.sizeAdjust(width, height);
-        //gamePanel.sizeAdjust(width, height);
+        if (game) {
+            gamePanel.sizeAdjust(width, height);
+        } else {
+            mainMenuPanel.sizeAdjust(width, height);
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (mainMenuPanel.startGame) {
+            timer.stop();
+            this.removeAll();
+            setupGamePanel();
+            this.revalidate();
+            this.repaint();
+        }
     }
 }
